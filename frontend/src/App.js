@@ -15,27 +15,109 @@ class App extends React.Component{
       corpId: '',
       authCode: '',
       userId: '',
-      userName: ''
+      userName: '',
+      chatId:'',
+      courseId:'',
+      openConversationId:'',
+      groupData:{
+        name:"直播群"
+      },
+      courseData:{
+
+      },
+      liveData:{}
     }
   }
   render() {
     const corpId = window.location.href.split("=")[1]
     if(this.state.corpId === ''){
-      setTimeout(function () {
-        this.setState({corpId:corpId});
-      }, 0)
+        sessionStorage.setItem("corpId", corpId);
     }
     if(this.state.userId === ''){
       this.login(corpId);
     }
     return (
         <div className="App">
-
+          <h2>课程直播</h2>
+          <p><button type="button" onClick={() => this.createGroup()}>创建群会话</button></p>
+          <p><button type="button" onClick={() => this.createCourse()}>创建直播课程</button></p>
+          <p><button type="button" onClick={() => this.getWatchData()}>查看直播数据</button></p>
         </div>
     );
   }
+  createGroup(){
+    let groupData = this.state.groupData;
+    groupData.userId = this.state.userId;
+    groupData.corpId = sessionStorage.getItem("corpId");
+    axios.post(this.state.domain + "/live/createGroup", JSON.stringify(groupData),
+        {headers:{"Content-Type":"application/json"}}
+    ).then(res => {
+      if (res && res.data.success) {
+        if(res.data.data){
+          this.setState({
+            chatId:res.data.data.chatid,
+            openConversationId:res.data.data.openConversationId
+          })
+          alert("创建群会话成功！")
+        }else{
+          alert("创建群会话失败！")
+        }
+      } else {
+        alert("createGroup failed --->" + JSON.stringify(res));
+      }
+    }).catch(error => {
+      alert("createGroup err, " + JSON.stringify(error))
+    })
+  }
+  createCourse(){
+    let courseData = this.state.courseData;
+    courseData.userId = this.state.userId;
+    courseData.corpId = sessionStorage.getItem("corpId");
+    axios.post(this.state.domain + "/live/createCourse", JSON.stringify(courseData),
+        {headers:{"Content-Type":"application/json"}}
+    ).then(res => {
+      if (res && res.data.success) {
+        if(res.data.data){
+          this.setState({
+            courseId:res.data.data,
+          })
+          alert("创建直播课程成功！")
+        }else{
+          alert("创建直播课程失败！")
+        }
+      } else {
+        alert("createCourse failed --->" + JSON.stringify(res));
+      }
+    }).catch(error => {
+      alert("createCourse err, " + JSON.stringify(error))
+    })
+  }
+  getWatchData(){
+    const getWatchData = {
+      userId: this.state.userId,
+      corpId: sessionStorage.getItem("corpId"),
+      chatId: this.state.chatId,
+      feedId: this.state.courseId,
+    };
+    axios.post(this.state.domain + "/live/getWatchData", JSON.stringify(getWatchData),
+        {headers:{"Content-Type":"application/json"}}
+    ).then(res => {
+      if (res && res.data.success) {
+        if(res.data.data){
+          this.setState({
+            liveData:res.data.data,
+          })
+        }else{
+          alert("获取直播数据失败！")
+        }
+      } else {
+        alert("getWatchData failed --->" + JSON.stringify(res));
+      }
+    }).catch(error => {
+      alert("getWatchData err, " + JSON.stringify(error))
+    })
+  }
   login(corpId) {
-    alert("corpId: " +  corpId);
     let _this = this;
     dd.runtime.permission.requestAuthCode({
       corpId: corpId,//企业 corpId

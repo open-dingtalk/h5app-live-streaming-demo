@@ -20,7 +20,12 @@ public class AppConfig {
         return suiteTicket;
     }
 
-    public static void setSuiteTicket(String suiteTicket) {
+//    public static void setSuiteTicket(String suiteTicket) {
+//        AppConfig.suiteTicket = suiteTicket;
+//    }
+
+    @Value("${app.suite-ticket}")
+    public void setSuiteTicket(String suiteTicket) {
         AppConfig.suiteTicket = suiteTicket;
     }
 
