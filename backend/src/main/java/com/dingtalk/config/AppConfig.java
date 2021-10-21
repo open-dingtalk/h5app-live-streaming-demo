@@ -6,47 +6,57 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
 
-    private static String appKey;
+    private static String suiteTicket;
 
-    private static String appSecret;
+    private static String suiteKey;
 
-    private static String corpId;
+    private static String suiteSecret;
 
-    private static Long agentId;
+    private static String token;
 
-    public static Long getAgentId() {
-        return agentId;
+    private static String encodingAesKey;
+
+    public static String getSuiteTicket() {
+        return suiteTicket;
     }
 
-    @Value("${app.agent_id}")
-    public void setAgentId(String agentId) {
-        AppConfig.agentId = Long.parseLong(agentId);
+    public static void setSuiteTicket(String suiteTicket) {
+        AppConfig.suiteTicket = suiteTicket;
     }
 
-    public static String getAppKey() {
-        return appKey;
+    public static String getSuiteKey() {
+        return suiteKey;
     }
 
-    @Value("${app.app_key}")
-    public void setAppKey(String appKey) {
-        AppConfig.appKey = appKey;
+    @Value("${app.suite-key}")
+    public void setSuiteKey(String suiteKey) {
+        AppConfig.suiteKey = suiteKey;
     }
 
-    public static String getAppSecret() {
-        return appSecret;
+    public static String getSuiteSecret() {
+        return suiteSecret;
     }
 
-    @Value("${app.app_secret}")
-    public void setAppSecret(String appSecret) {
-        AppConfig.appSecret = appSecret;
+    @Value("${app.suite-secret}")
+    public void setSuiteSecret(String suiteSecret) {
+        AppConfig.suiteSecret = suiteSecret;
     }
 
-    public static String getCorpId() {
-        return corpId;
+    public static String getToken() {
+        return token;
     }
 
-    @Value("${app.corp_id}")
-    public void setCorpId(String corpId) {
-        AppConfig.corpId = corpId;
+    @Value("${app.token}")
+    public void setToken(String token) {
+        AppConfig.token = token;
+    }
+
+    public static String getEncodingAesKey() {
+        return encodingAesKey;
+    }
+
+    @Value("${app.encoding-aes-key}")
+    public void setEncodingAesKey(String encodingAesKey) {
+        AppConfig.encodingAesKey = encodingAesKey;
     }
 }

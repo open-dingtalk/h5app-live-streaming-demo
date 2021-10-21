@@ -23,9 +23,9 @@ public class UserManager {
      * @param authCode 免登授权码
      * @return
      */
-    public String getUserId(String authCode) throws ApiException {
+    public String getUserId(String code, String corpId) {
         // 1. 获取access_token
-        String accessToken = AccessTokenUtil.getAppAccessToken();
+        String accessToken = AccessTokenUtil.getCorpAccessToken(corpId);
 
         // 2. 获取用户信息
         DingTalkClient client = new DefaultDingTalkClient(UrlConstant.GET_USER_INFO_URL);
@@ -46,9 +46,9 @@ public class UserManager {
      * @param userId 用户id
      * @return
      */
-    public String getUserName(String userId) throws ApiException {
+    public String getUserName(String userId, String corpId) throws ApiException {
         // 1. 获取access_token
-        String accessToken = AccessTokenUtil.getAppAccessToken();
+        String accessToken = AccessTokenUtil.getCorpAccessToken(corpId);
 
         // 2. 获取用户详情
         DingTalkClient client = new DefaultDingTalkClient(UrlConstant.USER_GET_URL);

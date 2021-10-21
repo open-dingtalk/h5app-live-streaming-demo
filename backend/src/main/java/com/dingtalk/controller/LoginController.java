@@ -1,5 +1,6 @@
 package com.dingtalk.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.dingtalk.config.AppConfig;
 import com.dingtalk.model.RpcServiceResult;
 import com.dingtalk.service.UserManager;
@@ -37,13 +38,15 @@ public class LoginController {
      * @return
      */
     @GetMapping(value = "/login")
-    public RpcServiceResult login(@RequestParam(value = "authCode") String authCode) {
-        log.info("login request!!! authCode:{}", authCode);
+    public RpcServiceResult login(@RequestParam(value = "corpId") String corpId, @RequestParam(value = "authCode") String authCode) {
+        log.info("login request!!! authCode:{} corpId:{}", authCode, corpId);
+        log.info("app config key:{}, secret:{}, ticket:{}", AppConfig.getSuiteKey(), AppConfig.getSuiteSecret(), AppConfig.getSuiteTicket());
+
         try {
             // 1. 获取用户id
-            String userId = userManager.getUserId(authCode);
+            String userId = userManager.getUserId(authCode, corpId);
             // 2. 获取用户名称
-            String userName = userManager.getUserName(userId);
+            String userName = userManager.getUserName(userId, corpId);
             // 3. 返回用户身份
             Map<String, Object> resultMap = new HashMap<>();
             resultMap.put("userId", userId);
@@ -56,13 +59,4 @@ public class LoginController {
         }
     }
 
-    /**
-     * 获取corpId
-     * @return
-     */
-    @RequestMapping(value = "/getCorpId", method = RequestMethod.GET)
-    public String getCorpId() {
-        log.info("coroId:{}", AppConfig.getCorpId());
-        return AppConfig.getCorpId();
-    }
 }
