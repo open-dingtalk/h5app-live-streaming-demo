@@ -19,8 +19,14 @@ class App extends React.Component{
     }
   }
   render() {
+    const corpId = window.location.href.split("=")[1]
+    if(this.state.corpId === ''){
+      setTimeout(function () {
+        this.setState({corpId:corpId});
+      }, 0)
+    }
     if(this.state.userId === ''){
-      this.login();
+      this.login(corpId);
     }
     return (
         <div className="App">
@@ -28,25 +34,15 @@ class App extends React.Component{
         </div>
     );
   }
-  login(){
-    axios.get(this.state.domain + "/getCorpId")
-        .then(res => {
-          if(res.data) {
-            this.loginAction(res.data);
-          }
-        }).catch(error => {
-      alert("corpId err, " + JSON.stringify(error))
-    })
-  }
-  loginAction(corpId) {
-    // alert("corpId: " +  corpId);
+  login(corpId) {
+    alert("corpId: " +  corpId);
     let _this = this;
     dd.runtime.permission.requestAuthCode({
       corpId: corpId,//企业 corpId
       onSuccess : function(res) {
         // 调用成功时回调
         _this.state.authCode = res.code
-        axios.get(_this.state.domain + "/login?authCode=" + _this.state.authCode
+        axios.get(_this.state.domain + "/login?authCode=" + _this.state.authCode + "&corpId=" + corpId
         ).then(res => {
           if (res && res.data.success) {
             let userId = res.data.data.userId;
