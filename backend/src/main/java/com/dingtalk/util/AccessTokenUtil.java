@@ -1,6 +1,8 @@
 package com.dingtalk.util;
 
 import com.dingtalk.api.DefaultDingTalkClient;
+import com.dingtalk.api.DingTalkClient;
+import com.dingtalk.api.DingTalkSignatureUtil;
 import com.dingtalk.api.request.OapiGettokenRequest;
 import com.dingtalk.api.request.OapiServiceGetCorpTokenRequest;
 import com.dingtalk.api.request.OapiServiceGetSuiteTokenRequest;
@@ -11,6 +13,9 @@ import com.dingtalk.config.AppConfig;
 import com.dingtalk.constant.UrlConstant;
 import com.dingtalk.exception.InvokeDingTalkException;
 import com.taobao.api.ApiException;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 获取access_token工具类

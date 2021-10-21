@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.dingtalk.config.AppConfig;
 import com.dingtalk.model.RpcServiceResult;
 import com.dingtalk.service.UserManager;
+import com.dingtalk.util.AccessTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

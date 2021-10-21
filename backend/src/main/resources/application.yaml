@@ -2,7 +2,7 @@ server:
   port: 8080
   forward-headers-strategy: FRAMEWORK
 app:
-  app_key: ${appKey}
-  app_secret: ${appSecret}
-  corp_id: ${corpId}
-  agent_id: ${agentId}
+  suite-key: ${suiteKey}
+  suite-secret: ${suiteSecret}
+  token: ${token}
+  encoding-aes-key: ${encodingAesKey}
