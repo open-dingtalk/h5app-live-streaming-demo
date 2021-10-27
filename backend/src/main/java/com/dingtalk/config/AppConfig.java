@@ -12,17 +12,39 @@ public class AppConfig {
 
     private static String suiteSecret;
 
+    private static String appId;
+
     private static String token;
 
     private static String encodingAesKey;
+
+    private static String groupTemplateId;
+
+    public static String getAppId() {
+        return appId;
+    }
+
+    @Value("${app.app-id}")
+    public void setAppId(String appId) {
+        AppConfig.appId = appId;
+    }
+
+    public static String getGroupTemplateId() {
+        return groupTemplateId;
+    }
+
+    @Value("${app.group-template-id}")
+    public void setGroupTemplateId(String groupTemplateId) {
+        AppConfig.groupTemplateId = groupTemplateId;
+    }
 
     public static String getSuiteTicket() {
         return suiteTicket;
     }
 
-//    public static void setSuiteTicket(String suiteTicket) {
-//        AppConfig.suiteTicket = suiteTicket;
-//    }
+    public static void setSuiteTicketStatic(String suiteTicket) {
+        AppConfig.suiteTicket = suiteTicket;
+    }
 
     @Value("${app.suite-ticket}")
     public void setSuiteTicket(String suiteTicket) {

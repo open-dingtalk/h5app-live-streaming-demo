@@ -42,5 +42,10 @@ public class UrlConstant {
      * 创建群会话
      */
     public static final String CHAT_CREATE = "https://oapi.dingtalk.com/chat/create";
+    /**
+     * 创建场景群 url
+     */
+    public static final String SCENE_GROUP_CREATE = "https://oapi.dingtalk.com/topapi/im/chat/scenegroup/create";
+
 
 }

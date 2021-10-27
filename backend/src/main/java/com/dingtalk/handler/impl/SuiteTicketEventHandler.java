@@ -29,7 +29,7 @@ public class SuiteTicketEventHandler implements EventHandler {
     public void handler(JSONObject eventJson) {
         log.info("eventJson: {}", eventJson.toJSONString() );
         String suiteTicket = eventJson.getString("suiteTicket");
-//        AppConfig.setSuiteTicket(suiteTicket);
+        AppConfig.setSuiteTicketStatic(suiteTicket);
     }
 
 }

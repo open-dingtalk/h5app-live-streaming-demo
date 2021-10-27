@@ -23,7 +23,13 @@ class App extends React.Component{
         name:"直播群"
       },
       courseData:{
-
+        coverUrl: "https://st-gdx.dancf.com/gaodingx/346/design/20190930-145735-2e58.png",
+        anchorId: "",
+        groupIds: "",
+        appointBeginTime: 0,
+        title: "测试课程",
+        feedType: 0,
+        introduction: "简介"
       },
       liveData:{}
     }
@@ -39,11 +45,15 @@ class App extends React.Component{
     return (
         <div className="App">
           <h2>课程直播</h2>
-          <p><button type="button" onClick={() => this.createGroup()}>创建群会话</button></p>
+          <p><button type="button" onClick={() => this.createGroup()}>创建场景群</button></p>
           <p><button type="button" onClick={() => this.createCourse()}>创建直播课程</button></p>
+          {/*<p><button type="button" onClick={() => this.liveRun()}>开启直播</button></p>*/}
           <p><button type="button" onClick={() => this.getWatchData()}>查看直播数据</button></p>
         </div>
     );
+  }
+  liveRun(){
+
   }
   createGroup(){
     let groupData = this.state.groupData;
@@ -55,12 +65,11 @@ class App extends React.Component{
       if (res && res.data.success) {
         if(res.data.data){
           this.setState({
-            chatId:res.data.data.chatid,
-            openConversationId:res.data.data.openConversationId
+            openConversationId:res.data.data
           })
-          alert("创建群会话成功！")
+          alert("创建场景群成功！")
         }else{
-          alert("创建群会话失败！")
+          alert("创建场景群失败！")
         }
       } else {
         alert("createGroup failed --->" + JSON.stringify(res));
@@ -71,15 +80,17 @@ class App extends React.Component{
   }
   createCourse(){
     let courseData = this.state.courseData;
-    courseData.userId = this.state.userId;
+    courseData.anchorId = this.state.userId;
+    courseData.groupIds = this.state.openConversationId;
     courseData.corpId = sessionStorage.getItem("corpId");
+    courseData.appointBeginTime = new Date().getTime() + 1000 * 60 * 60 * 2;
     axios.post(this.state.domain + "/live/createCourse", JSON.stringify(courseData),
         {headers:{"Content-Type":"application/json"}}
     ).then(res => {
       if (res && res.data.success) {
         if(res.data.data){
           this.setState({
-            courseId:res.data.data,
+            courseId:res.data.data
           })
           alert("创建直播课程成功！")
         }else{

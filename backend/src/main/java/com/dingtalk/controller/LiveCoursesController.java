@@ -8,6 +8,7 @@ import com.dingtalk.api.request.OapiPlanetomFeedsCreateRequest;
 import com.dingtalk.api.response.OapiChatCreateResponse;
 import com.dingtalk.api.response.OapiPlanetomFeedsCreateResponse;
 import com.dingtalk.api.response.OapiPlanetomFeedsWatchdataGetResponse;
+import com.dingtalk.config.AppConfig;
 import com.dingtalk.constant.UrlConstant;
 import com.dingtalk.model.RpcServiceResult;
 import com.dingtalk.service.LiveCoursesManager;
@@ -16,9 +17,7 @@ import com.taobao.api.ApiException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j(topic = "live_log")
 @RestController
@@ -28,7 +27,6 @@ public class LiveCoursesController {
     @Autowired
     LiveCoursesManager liveCoursesManager;
 
-
     @RequestMapping("/createGroup")
     public RpcServiceResult createGroup(@RequestBody String param) throws ApiException {
         log.info("createGroup: param:{}", param);
@@ -36,12 +34,12 @@ public class LiveCoursesController {
         String corpId = jsonObject.getString("corpId");
         String name = jsonObject.getString("name");
         String userId = jsonObject.getString("userId");
-        OapiChatCreateResponse group = liveCoursesManager.createGroup(corpId, name, userId);
-        if(group == null){
-            return RpcServiceResult.getFailureResult("-1", "创建群会话失败");
+        String groupId = liveCoursesManager.createGroup(corpId, userId, name);
+        if(StringUtils.isEmpty(groupId)){
+            return RpcServiceResult.getFailureResult("-1", "创建场景群失败");
         }
-        log.info("createGroup: group:{}", JSON.toJSONString(group));
-        return RpcServiceResult.getSuccessResult(group);
+        log.info("createGroup: groupId:{}", JSON.toJSONString(groupId));
+        return RpcServiceResult.getSuccessResult(groupId);
     }
 
     @RequestMapping("/createCourse")
@@ -49,7 +47,7 @@ public class LiveCoursesController {
         log.info("createGroup: param:{}", param);
         JSONObject jsonObject = JSONObject.parseObject(param);
         String corpId = jsonObject.getString("corpId");
-        OapiPlanetomFeedsCreateRequest request = JSONObject.parseObject(jsonObject.getString("params"), OapiPlanetomFeedsCreateRequest.class);
+        OapiPlanetomFeedsCreateRequest request = JSONObject.parseObject(param, OapiPlanetomFeedsCreateRequest.class);
         String courseId = liveCoursesManager.createCourses(corpId, request);
         if(StringUtils.isEmpty(courseId)){
             return RpcServiceResult.getFailureResult("-1", "创建课程失败");
