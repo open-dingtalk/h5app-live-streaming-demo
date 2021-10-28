@@ -124,6 +124,7 @@ class App extends React.Component {
           if (res.data.data) {
             this.setState({
               openConversationId: res.data.data,
+              showType: 0,
             })
             message.success("创建场景群成功！")
           } else {
@@ -192,12 +193,10 @@ class App extends React.Component {
             message.error("获取直播数据失败！")
           }
         } else {
-          alert("getWatchData failed --->" + JSON.stringify(res))
+          message.error("暂无数据")
         }
       })
-      .catch((error) => {
-        alert("getWatchData err, " + JSON.stringify(error))
-      })
+      .catch((error) => {})
   }
   login(corpId) {
     let _this = this
