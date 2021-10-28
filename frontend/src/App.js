@@ -105,6 +105,8 @@ class App extends React.Component {
           onClick={() => {
             if (this.state.courseId) {
               window.location.href = `dingtalk://dingtalkclient/action/start_uniform_live?liveUuid=${this.state.courseId}`
+            } else {
+              message.error("请先创建直播课程")
             }
           }}
         >
