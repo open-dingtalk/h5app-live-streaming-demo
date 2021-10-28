@@ -1,8 +1,12 @@
 server:
-  port: 8080
+  port: 8081
   forward-headers-strategy: FRAMEWORK
 app:
+  suite-ticket: ${suiteTicket}
   suite-key: ${suiteKey}
   suite-secret: ${suiteSecret}
+  app-id: ${appId}
   token: ${token}
   encoding-aes-key: ${encodingAesKey}
+  group-template-id: ${groupTemplateId}
+
