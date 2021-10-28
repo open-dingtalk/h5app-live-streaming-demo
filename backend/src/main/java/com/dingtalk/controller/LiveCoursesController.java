@@ -12,6 +12,7 @@ import com.dingtalk.config.AppConfig;
 import com.dingtalk.constant.UrlConstant;
 import com.dingtalk.model.RpcServiceResult;
 import com.dingtalk.service.LiveCoursesManager;
+import com.dingtalk.service.UserManager;
 import com.dingtalk.util.AccessTokenUtil;
 import com.taobao.api.ApiException;
 import lombok.extern.slf4j.Slf4j;
@@ -19,13 +20,23 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Slf4j(topic = "live_log")
 @RestController
 @RequestMapping("/live")
 public class LiveCoursesController {
 
+
+    @Resource
+    private UserManager userManager;
+
     @Autowired
-    LiveCoursesManager liveCoursesManager;
+    private LiveCoursesManager liveCoursesManager;
 
     @RequestMapping("/createGroup")
     public RpcServiceResult createGroup(@RequestBody String param) throws ApiException {
@@ -68,8 +79,15 @@ public class LiveCoursesController {
         if(watchData == null){
             return RpcServiceResult.getFailureResult("-1", "查询直播数据失败");
         }
-        log.info("getWatchData: watchData:{}", JSON.toJSONString(watchData));
-        return RpcServiceResult.getSuccessResult(watchData);
+        List<JSONObject> dataList = new ArrayList<>(watchData.getViewerWatchDetails().size());
+        for(OapiPlanetomFeedsWatchdataGetResponse.OpenFeedWatchDetailModel feedWatchDetailModel : watchData.getViewerWatchDetails()){
+            String userName = userManager.getUserName(feedWatchDetailModel.getUserid(), corpId);
+            JSONObject object = JSONObject.parseObject(JSON.toJSONString(feedWatchDetailModel));
+            object.put("userName", userName);
+            dataList.add(object);
+        }
+        log.info("getWatchData: dataList:{}", JSON.toJSONString(dataList));
+        return RpcServiceResult.getSuccessResult(dataList);
     }
 
 }

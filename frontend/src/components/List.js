@@ -5,13 +5,13 @@ const List = (props) => {
   const column = [
     {
       title: "观看回放时长（单位:秒）",
-      dataIndex: "play_record_duration",
-      key: "play_record_duration",
+      dataIndex: "playRecordDuration",
+      key: "playRecordDuration",
     },
     {
       title: "观看直播时长（单位:秒）",
-      dataIndex: "play_live_duration",
-      key: "play_live_duration",
+      dataIndex: "playLiveDuration",
+      key: "playLiveDuration",
     },
     {
       title: "用户名",

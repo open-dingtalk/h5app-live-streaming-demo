@@ -50,6 +50,7 @@ public class LiveCoursesManager {
         System.out.println("params: " + JSON.toJSONString(request));
         System.out.println("appId: " + appId);
         System.out.println("openAppId: " + openAppId);
+        request.setFeedType(0L);
         request.setOpenAppId(Long.parseLong(AppConfig.getAppId()));
         DingTalkClient client = new DefaultDingTalkClient(UrlConstant.FEEDS_CREATE_URL);
         OapiPlanetomFeedsCreateResponse rsp = client.execute(request, accessToken);
