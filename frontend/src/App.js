@@ -26,7 +26,7 @@ class App extends React.Component {
       groupData: {
         name: "直播群",
       },
-      showType: 0,
+      showType: 3,
       courseData: {
         coverUrl:
           "https://st-gdx.dancf.com/gaodingx/346/design/20190930-145735-2e58.png",
@@ -51,9 +51,9 @@ class App extends React.Component {
     if (this.state.corpId === "") {
       sessionStorage.setItem("corpId", corpId)
     }
-    if (this.state.userId === "") {
-      this.login(corpId)
-    }
+    // if (this.state.userId === "") {
+    //   this.login(corpId)
+    // }
     return (
       <div className="App">
         {this.state.showType === 2 && <h2>课程直播</h2>}
@@ -67,7 +67,10 @@ class App extends React.Component {
           />
         )}
         {this.state.showType === 3 && (
-          <List onClick={() => this.setState({ showType: 0 })} />
+          <List
+            onClick={() => this.setState({ showType: 0 })}
+            viewer_watch_details={this.state.viewer_watch_details}
+          />
         )}
         {!this.state.showType && (
           <p>
@@ -97,6 +100,16 @@ class App extends React.Component {
             </Button>
           </p>
         )}
+        <a
+          className="AppLink"
+          onClick={() => {
+            if (this.state.courseId) {
+              window.location.href = `dingtalk://dingtalkclient/action/start_uniform_live?liveUuid=${this.state.courseId}`
+            }
+          }}
+        >
+          查看直播课程
+        </a>
       </div>
     )
   }
@@ -176,7 +189,7 @@ class App extends React.Component {
         if (res && res.data.success) {
           if (res.data.data) {
             this.setState({
-              viewer_watch_details: res.data.data.viewer_watch_details,
+              viewer_watch_details: res.data.data,
               showType: 3,
             })
           } else {
@@ -190,46 +203,46 @@ class App extends React.Component {
         alert("getWatchData err, " + JSON.stringify(error))
       })
   }
-  login(corpId) {
-    let _this = this
-    dd.runtime.permission.requestAuthCode({
-      corpId: corpId, //企业 corpId
-      onSuccess: function (res) {
-        // 调用成功时回调
-        _this.state.authCode = res.code
-        axios
-          .get(
-            _this.state.domain +
-              "/login?authCode=" +
-              _this.state.authCode +
-              "&corpId=" +
-              corpId
-          )
-          .then((res) => {
-            if (res && res.data.success) {
-              let userId = res.data.data.userId
-              let userName = res.data.data.userName
-              message.success("登录成功，你好" + userName)
-              setTimeout(function () {
-                _this.setState({
-                  userId: userId,
-                  userName: userName,
-                })
-              }, 0)
-            } else {
-              alert("login failed --->" + JSON.stringify(res))
-            }
-          })
-          .catch((error) => {
-            alert("httpRequest failed --->" + JSON.stringify(error))
-          })
-      },
-      onFail: function (err) {
-        // 调用失败时回调
-        alert("requestAuthCode failed --->" + JSON.stringify(err))
-      },
-    })
-  }
+  // login(corpId) {
+  //   let _this = this
+  //   dd.runtime.permission.requestAuthCode({
+  //     corpId: corpId, //企业 corpId
+  //     onSuccess: function (res) {
+  //       // 调用成功时回调
+  //       _this.state.authCode = res.code
+  //       axios
+  //         .get(
+  //           _this.state.domain +
+  //             "/login?authCode=" +
+  //             _this.state.authCode +
+  //             "&corpId=" +
+  //             corpId
+  //         )
+  //         .then((res) => {
+  //           if (res && res.data.success) {
+  //             let userId = res.data.data.userId
+  //             let userName = res.data.data.userName
+  //             message.success("登录成功，你好" + userName)
+  //             setTimeout(function () {
+  //               _this.setState({
+  //                 userId: userId,
+  //                 userName: userName,
+  //               })
+  //             }, 0)
+  //           } else {
+  //             alert("login failed --->" + JSON.stringify(res))
+  //           }
+  //         })
+  //         .catch((error) => {
+  //           alert("httpRequest failed --->" + JSON.stringify(error))
+  //         })
+  //     },
+  //     onFail: function (err) {
+  //       // 调用失败时回调
+  //       alert("requestAuthCode failed --->" + JSON.stringify(err))
+  //     },
+  //   })
+  // }
 }
 
 export default App
