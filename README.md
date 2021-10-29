@@ -90,6 +90,30 @@ npm run build
 
 ### 运行展示
 
+![4](https://img.alicdn.com/imgextra/i4/O1CN01qG31Cj23BtW9RBPvB_!!6000000007218-2-tps-500-319.png)
+
+创建课程
+
+![5](https://img.alicdn.com/imgextra/i4/O1CN01BuR2nc1E9Z6E9iIMJ_!!6000000000309-2-tps-500-361.png)
+
+创建直播群
+
+![7](https://img.alicdn.com/imgextra/i4/O1CN01vbgDAs1iWPKCSTyXn_!!6000000004420-2-tps-498-993.png)
+
+查看直播
+
+![9](https://img.alicdn.com/imgextra/i1/O1CN01m34Xid1FbKjHQ6OmH_!!6000000000505-2-tps-573-1098.png)
+
+直播中
+
+![8](https://img.alicdn.com/imgextra/i1/O1CN01fc42TL1f7j8SopltS_!!6000000003960-2-tps-491-460.png)
+
+直播统计
+
+![10](https://img.alicdn.com/imgextra/i1/O1CN01zfnPVP21Dblk4A0mz_!!6000000006951-2-tps-495-494.png)
+
+直播数据
+
 
 
 ### 参考文档
