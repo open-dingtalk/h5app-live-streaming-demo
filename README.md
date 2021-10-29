@@ -102,7 +102,7 @@ npm run build
 
 查看直播
 
-![9](https://img.alicdn.com/imgextra/i1/O1CN01m34Xid1FbKjHQ6OmH_!!6000000000505-2-tps-573-1098.png)
+![9](https://img.alicdn.com/imgextra/i3/O1CN01MpAoiZ1s8GblZLUQd_!!6000000005721-2-tps-494-951.png)
 
 直播中
 
